@@ -13,7 +13,12 @@ const EXPIRES_IN_SECONDS = 30 * 60;
 
 function sanitizeDescription(message: unknown): string | undefined {
   if (typeof message !== "string") return undefined;
-  const cleaned = message.replace(/[\p{Cc}\p{Cf}]/gu, "").trim();
+  // AbacatePay rejects emojis in the PIX description — keep only letters,
+  // digits, punctuation and spaces.
+  const cleaned = message
+    .replace(/[^\p{L}\p{N}\p{P}\p{Zs}]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
   return cleaned ? cleaned.slice(0, MAX_DESCRIPTION_LENGTH) : undefined;
 }
 
