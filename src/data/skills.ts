@@ -15,6 +15,7 @@ export const skillGroups: readonly SkillGroup[] = [
     items: [
       same('React'),
       same('Next.js'),
+      same('Vue.js'),
       same('Angular'),
       same('TypeScript'),
       same('JavaScript'),
@@ -29,6 +30,8 @@ export const skillGroups: readonly SkillGroup[] = [
     items: [
       same('Node.js'),
       same('NestJS'),
+      same('Prisma'),
+      same('Sequelize'),
       same('REST API'),
       { pt: 'Testes unitários', en: 'Unit testing' },
     ],
