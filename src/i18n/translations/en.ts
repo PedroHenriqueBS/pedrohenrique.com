@@ -53,9 +53,12 @@ export const en: Translation = {
   github: {
     publicRepos: 'public repositories',
     followers: 'followers',
+    stars: 'stars earned',
+    memberSince: 'on GitHub since',
+    statsTitle: 'stats',
+    langsTitle: 'most used languages',
+    loading: 'loading…',
     statsUnavailable: 'stats unavailable right now — see them on the profile',
-    statsAlt: 'GitHub statistics',
-    topLangsAlt: 'Most used languages',
   },
   support: {
     kicker: 'support my work',

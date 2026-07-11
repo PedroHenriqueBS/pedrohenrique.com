@@ -1,20 +1,24 @@
-import { useState } from 'react'
 import { useLanguage } from '../../i18n'
 import { profile } from '../../data/profile'
 import { useGitHubProfile } from '../../hooks/useGitHubProfile'
+import { useGitHubStats } from '../../hooks/useGitHubStats'
 import { Card } from '../ui/Card'
 import { SectionHeading } from '../ui/SectionHeading'
 
-const STATS_BASE = 'https://github-readme-stats.vercel.app/api'
-const CHART_THEME =
-  'bg_color=00000000&text_color=9db3a0&title_color=00ff88&hide_border=true'
+/** GitHub's official language colors for the languages Pedro actually uses. */
+const LANGUAGE_COLORS: Record<string, string> = {
+  TypeScript: '#3178c6',
+  JavaScript: '#f1e05a',
+  Vue: '#41b883',
+  HTML: '#e34c26',
+  CSS: '#663399',
+  SCSS: '#c6538c',
+}
 
 export function GitHubStats() {
   const { t } = useLanguage()
   const github = useGitHubProfile()
-  const [chartsFailed, setChartsFailed] = useState(false)
-
-  const markFailed = () => setChartsFailed(true)
+  const { stats, failed } = useGitHubStats()
 
   const summary = [
     { value: String(github.publicRepos), label: t.github.publicRepos },
@@ -23,11 +27,21 @@ export function GitHubStats() {
     { value: '2x', label: 'Pair Extraordinaire' },
   ]
 
+  const facts = [
+    { label: t.github.publicRepos, value: String(github.publicRepos) },
+    { label: t.github.followers, value: String(github.followers) },
+    // A "0 stars" row would read as a downside — only brag when there is something to brag about.
+    ...(stats && stats.totalStars > 0
+      ? [{ label: t.github.stars, value: String(stats.totalStars) }]
+      : []),
+    { label: t.github.memberSince, value: String(github.memberSince) },
+  ]
+
   return (
     <section id="github" className="relative z-1 mx-auto max-w-[1140px] scroll-mt-16 px-6 py-16 md:py-[90px]">
       <SectionHeading number="06" title="GitHub" />
 
-      {chartsFailed ? (
+      {failed ? (
         <a
           data-reveal
           href={profile.links.github}
@@ -42,23 +56,45 @@ export function GitHubStats() {
         </a>
       ) : (
         <div className="grid items-stretch gap-5.5 md:grid-cols-2">
-          <Card data-reveal className="flex items-center justify-center p-4.5">
-            <img
-              src={`${STATS_BASE}?username=${profile.githubUsername}&show_icons=true&icon_color=00ff88&ring_color=00ff88&rank_icon=github&${CHART_THEME}`}
-              alt={t.github.statsAlt}
-              loading="lazy"
-              onError={markFailed}
-              className="max-w-full"
-            />
+          <Card data-reveal className="p-6.5">
+            <div className="mb-5 font-mono text-[13px] text-accent">{`// ${t.github.statsTitle}`}</div>
+            <dl className="flex flex-col gap-3.5 font-mono text-[13.5px]">
+              {facts.map((fact) => (
+                <div key={fact.label} className="flex items-baseline justify-between gap-4 border-b border-accent/8 pb-3">
+                  <dt className="text-muted">{fact.label}</dt>
+                  <dd className="text-lg font-semibold text-accent">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
           </Card>
-          <Card data-reveal className="flex items-center justify-center p-4.5">
-            <img
-              src={`${STATS_BASE}/top-langs/?username=${profile.githubUsername}&layout=compact&${CHART_THEME}`}
-              alt={t.github.topLangsAlt}
-              loading="lazy"
-              onError={markFailed}
-              className="max-w-full"
-            />
+
+          <Card data-reveal className="p-6.5">
+            <div className="mb-5 font-mono text-[13px] text-accent">{`// ${t.github.langsTitle}`}</div>
+            {stats ? (
+              <ul className="flex flex-col gap-4">
+                {stats.languages.map((language) => {
+                  const color = LANGUAGE_COLORS[language.name] ?? 'var(--color-accent)'
+                  return (
+                    <li key={language.name} className="font-mono text-[13px]">
+                      <div className="mb-1.5 flex justify-between text-muted">
+                        <span className="text-ink">{language.name}</span>
+                        <span>{language.percent}%</span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-bg" role="presentation">
+                        <div
+                          className="h-full rounded-full transition-[width] duration-700"
+                          style={{ width: `${language.percent}%`, backgroundColor: color }}
+                        />
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            ) : (
+              <div className="flex h-40 items-center justify-center font-mono text-[13px] text-faint">
+                <span className="animate-pulse">{t.github.loading}</span>
+              </div>
+            )}
           </Card>
         </div>
       )}

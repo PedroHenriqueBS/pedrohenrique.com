@@ -12,8 +12,9 @@ export const profile = {
   },
   /** Static fallbacks shown until (or if) the GitHub API responds. */
   githubFallback: {
-    publicRepos: 11,
+    publicRepos: 13,
     followers: 42,
+    memberSince: 2017,
   },
   yearsInTech: '3+',
   typewriterRoles: [

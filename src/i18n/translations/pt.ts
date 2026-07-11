@@ -51,9 +51,12 @@ export const pt = {
   github: {
     publicRepos: 'repositórios públicos',
     followers: 'seguidores',
+    stars: 'stars recebidas',
+    memberSince: 'no GitHub desde',
+    statsTitle: 'estatísticas',
+    langsTitle: 'linguagens mais usadas',
+    loading: 'carregando…',
     statsUnavailable: 'estatísticas indisponíveis no momento — veja direto no perfil',
-    statsAlt: 'Estatísticas do GitHub',
-    topLangsAlt: 'Linguagens mais usadas',
   },
   support: {
     kicker: 'apoie meu trabalho',
