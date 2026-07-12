@@ -1,6 +1,6 @@
 import type { Localized } from "../i18n";
 import streamingScreenshot from "../assets/projects/streaming.webp";
-import playstationScreenshot from "../assets/projects/lp-playstation.webp";
+import financesScreenshot from "../assets/projects/dashboard.webp";
 
 export interface Project {
   name: string;
@@ -14,27 +14,43 @@ export interface Project {
 
 export const featuredProjects: readonly Project[] = [
   {
-    name: "DevFlix",
+    name: "streaming",
     repo: "streaming",
     url: "https://github.com/PedroHenriqueBS/streaming",
-    language: "TypeScript",
+    language: "Vue 3",
     screenshot: streamingScreenshot,
     description: {
       pt: "Plataforma de streaming completa: Vue 3, Pinia e Tailwind no front, NestJS, Prisma e PostgreSQL no back. Autenticação JWT, múltiplos perfis por conta e catálogo alimentado pela API do TMDB.",
       en: "Full streaming platform: Vue 3, Pinia and Tailwind on the front end, NestJS, Prisma and PostgreSQL on the back end. JWT auth, multiple profiles per account and a catalog powered by the TMDB API.",
     },
-    tags: ["Vue 3", "NestJS", "Prisma", "PostgreSQL"],
+    tags: [
+      "Vue 3",
+      "TypeScript",
+      "Pinia",
+      "NestJS",
+      "Prisma",
+      "PostgreSQL",
+      "JWT",
+    ],
   },
   {
-    name: "LP PlayStation",
-    repo: "lp-playstation",
-    url: "https://github.com/PedroHenriqueBS/lp-playstation",
-    language: "TypeScript",
-    screenshot: playstationScreenshot,
+    name: "finances",
+    repo: "finances",
+    url: "https://github.com/PedroHenriqueBS/finances",
+    language: "Astro",
+    screenshot: financesScreenshot,
     description: {
-      pt: "Landing page construída com Angular, Tailwind e Swiper, explorando componentes e carrosséis interativos.",
-      en: "Landing page built with Angular, Tailwind and Swiper, exploring components and interactive carousels.",
+      pt: "Plataforma de finanças que registra ganhos e perdas com a possibilidade de acompanhar o mercado de investimentos através da API brapi.",
+      en: "A finance platform that tracks gains and losses, with the ability to monitor the investment market via the brapi API.",
     },
-    tags: ["Angular", "TailwindCSS", "Swiper"],
+    tags: [
+      "Astro",
+      "TypeScript",
+      "PostgreSQL",
+      "Tailwind",
+      "NestJS",
+      "Prisma",
+      "JWT",
+    ],
   },
 ];
